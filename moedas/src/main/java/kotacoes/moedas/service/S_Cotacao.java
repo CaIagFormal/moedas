@@ -2,6 +2,7 @@ package kotacoes.moedas.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kotacoes.moedas.model.M_Chart;
 import kotacoes.moedas.model.M_Cotacao;
 import kotacoes.moedas.model.M_CotacaoJson;
 import kotacoes.moedas.model.M_RespostaApi;
@@ -40,4 +41,7 @@ public class S_Cotacao {
         r_cotacao.saveAll(cotacoes);
     }
 
+    public List<M_Chart> getChartByMoeda(String moeda) {
+        return r_cotacao.getChartByMoeda(moeda);
+    }
 }

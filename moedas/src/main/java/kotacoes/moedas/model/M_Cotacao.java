@@ -14,6 +14,8 @@ public class M_Cotacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(length = 3)
     private char[] code = new char[3];
     private double maxima;
     private double minima;
@@ -21,7 +23,7 @@ public class M_Cotacao {
     private double var_pct;
     private double cotacao;
     private LocalDateTime data_cota;
-    private LocalDateTime data_cria = LocalDateTime.now();
+    private LocalDateTime data_cria;
 
     public long getId() {
         return id;
@@ -102,7 +104,7 @@ public class M_Cotacao {
         this.var_cota = Double.parseDouble(json.getVar_cota());
         this.var_pct = Double.parseDouble(json.getVar_pct());
         this.cotacao = Double.parseDouble(json.getCotacao());
-        this.data_cota = LocalDateTime.ofInstant(Instant.parse(json.getData_cota()), ZoneId.of("UTC"));
+        this.data_cota = LocalDateTime.ofInstant(Instant.ofEpochSecond(Long.parseLong(json.getData_cota())), ZoneId.of("UTC"));
         this.data_cria = LocalDateTime.now();
     }
 }
