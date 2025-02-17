@@ -1,10 +1,17 @@
 package kotacoes.moedas.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kotacoes.moedas.model.M_Cotacao;
+import kotacoes.moedas.model.M_CotacaoJson;
+import kotacoes.moedas.model.M_RespostaApi;
 import kotacoes.moedas.repository.R_Cotacao;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class S_Cotacao {
@@ -18,8 +25,18 @@ public class S_Cotacao {
 
     @Scheduled(cron="0 * 10-18 * * ?")
     public void getCotacoesApi() {
-        String resposta_api = rest_template.getForObject("https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL", String.class);
 
-        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String,M_CotacaoJson> mapCotacao = new ObjectMapper().convertValue(
+                rest_template.getForObject("https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL", String.class),
+                M_RespostaApi.class).getCotacoes();
+
+        List<M_Cotacao> cotacoes = new ArrayList<>();
+        for (M_CotacaoJson json:
+             mapCotacao.values()) {
+            cotacoes.add(new M_Cotacao(json));
+        }
+
+        r_cotacao.saveAll(cotacoes);
     }
+
 }
