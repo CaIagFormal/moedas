@@ -5,6 +5,8 @@ import kotacoes.moedas.model.M_Cotacao;
 import kotacoes.moedas.service.S_Cotacao;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -19,9 +21,9 @@ public class C_Cotacao {
     }
 
 
-    @GetMapping("/")
+    @PostMapping("/get_chart_data")
     @ResponseBody
-    public List<M_Chart> getCotacaoMoeda() {
-        return s_cotacao.getChartByMoeda("USD");
+    public List<M_Chart> getCotacaoMoeda(@RequestParam("moeda") String moeda) {
+        return s_cotacao.getChartByMoeda(moeda);
     }
 }
