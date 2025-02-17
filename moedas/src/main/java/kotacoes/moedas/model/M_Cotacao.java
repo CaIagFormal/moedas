@@ -2,7 +2,9 @@ package kotacoes.moedas.model;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 @Entity
@@ -100,7 +102,7 @@ public class M_Cotacao {
         this.var_cota = Double.parseDouble(json.getVar_cota());
         this.var_pct = Double.parseDouble(json.getVar_pct());
         this.cotacao = Double.parseDouble(json.getCotacao());
-        this.data_cota = LocalDateTime.parse(json.getData_cota(), DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss"));
+        this.data_cota = LocalDateTime.ofInstant(Instant.parse(json.getData_cota()), ZoneId.of("UTC"));
         this.data_cria = LocalDateTime.now();
     }
 }
