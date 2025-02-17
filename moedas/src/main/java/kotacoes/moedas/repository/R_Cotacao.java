@@ -13,8 +13,9 @@ import java.util.List;
 public interface R_Cotacao extends JpaRepository<M_Cotacao, Long> {
     @Query(value = "select " +
                     "cotacao as value," +
-                    "data_cota as date" +
-                    " from kotacoes.cotacao " +
+                    "EXTRACT (EPOCH FROM(data_cota)) " +
+                    "*1000 as date " +
+                    "from kotacoes.cotacao " +
                     "where code = :moeda"
             ,nativeQuery = true)
     List<M_Chart> getChartByMoeda(@Param("moeda") String moeda);

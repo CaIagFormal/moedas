@@ -8,5 +8,5 @@ import java.time.LocalDateTime;
 public interface M_Chart {
     Double getValue();
 
-    LocalDateTime getDate();
+    long getDate();
 }

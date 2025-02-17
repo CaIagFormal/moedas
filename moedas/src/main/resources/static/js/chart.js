@@ -10,7 +10,7 @@
  * ---------------------------------------
  */
 
-function genChart(dados,target_div,moeda) {
+function genChart(dados,target_div) {
     var root = am5.Root.new(target_div);
 
     root.setThemes([
@@ -81,9 +81,11 @@ function generateDados(target_div,moeda) {
             moeda: moeda
         },
         success: function(dados) {
-            genChart(dados);
+            genChart(dados,target_div);
         }
     })
 }
 
 generateDados("usd_chart","USD");
+generateDados("eur_chart","EUR");
+generateDados("btc_chart","BTC");
