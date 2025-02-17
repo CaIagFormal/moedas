@@ -16,7 +16,7 @@ public class M_CotacaoJson {
     private String var_pct;
     @JsonProperty(value="bid")
     private String cotacao;
-    @JsonProperty("timestamp")
+    @JsonProperty(value="timestamp")
     private String data_cota;
 
     public String getCode() {
