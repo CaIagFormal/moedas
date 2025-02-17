@@ -1,5 +1,6 @@
 package kotacoes.moedas.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kotacoes.moedas.model.M_Cotacao;
 import kotacoes.moedas.model.M_CotacaoJson;
@@ -24,15 +25,15 @@ public class S_Cotacao {
     }
 
     @Scheduled(cron="0 * 10-18 * * ?")
-    public void getCotacoesApi() {
+    public void getCotacoesApi() throws JsonProcessingException {
 
-        Map<String,M_CotacaoJson> mapCotacao = new ObjectMapper().convertValue(
-                rest_template.getForObject("https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL", String.class),
+        Map<String,M_CotacaoJson> mapCotacao = new ObjectMapper().readValue(
+                rest_template.getForObject("https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL",
+                        String.class),
                 M_RespostaApi.class).getCotacoes();
 
         List<M_Cotacao> cotacoes = new ArrayList<>();
-        for (M_CotacaoJson json:
-             mapCotacao.values()) {
+        for (M_CotacaoJson json: mapCotacao.values()) {
             cotacoes.add(new M_Cotacao(json));
         }
 
