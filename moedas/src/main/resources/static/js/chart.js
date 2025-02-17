@@ -10,7 +10,7 @@
  * ---------------------------------------
  */
 
-async function genChart(target_div,moeda) {
+function genChart(dados,target_div,moeda) {
     var root = am5.Root.new(target_div);
 
     root.setThemes([
@@ -36,7 +36,7 @@ async function genChart(target_div,moeda) {
     var xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
       maxDeviation: 0.2,
       baseInterval: {
-        timeUnit: "day",
+        timeUnit: "minute",
         count: 1
       },
       renderer: am5xy.AxisRendererX.new(root, {
@@ -67,27 +67,23 @@ async function genChart(target_div,moeda) {
       orientation: "horizontal"
     }));
 
-    var data = await generateDados(moeda);
-    series.data.setAll(data);
+    series.data.setAll(dados);
 
     series.appear(1000);
     chart.appear(1000, 100);
 }
 
-function generateDados(moeda) {
-    return new Promise((resolve) => {
-        $.ajax({
-            url: "/get_chart_data",
-            method: "POST",
-            data: {
-                moeda: moeda
-            },
-            success: function(dados) {
-                resolve(dados);
-            }
-        })
-        resolve(null);
-    });
+function generateDados(target_div,moeda) {
+    $.ajax({
+        url: "/get_chart_data",
+        method: "POST",
+        data: {
+            moeda: moeda
+        },
+        success: function(dados) {
+            genChart(dados);
+        }
+    })
 }
 
-genChart("usd_chart","USD");
+generateDados("usd_chart","USD");
