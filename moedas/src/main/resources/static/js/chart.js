@@ -214,5 +214,5 @@ function addData(newValue,time,series,xAxis,easing) {
 }
 
 generateDados("usd_chart","USD");
-//generateDados("eur_chart","EUR");
-//generateDados("btc_chart","BTC");
+generateDados("eur_chart","EUR");
+generateDados("btc_chart","BTC");
