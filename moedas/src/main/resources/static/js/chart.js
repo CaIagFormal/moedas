@@ -9,7 +9,6 @@
  * https://www.amcharts.com/docs/v5/
  * ---------------------------------------
  */
-var dbg_chart;
 
 function genChart(dados,target_div,moeda) {
     var root = am5.Root.new(target_div);
@@ -80,18 +79,25 @@ function genChart(dados,target_div,moeda) {
         var container = am5.Container.new(root, {});
         var circle0 = container.children.push(am5.Circle.new(root, {
           radius: 5,
-          fill: am5.color(0xff0000)
+          fill: am5.color(0x00ff00)
         }));
         var circle1 = container.children.push(am5.Circle.new(root, {
           radius: 5,
-          fill: am5.color(0xff0000)
+          fill: am5.color(0x00ff00)
         }));
 
         circle1.animate({
           key: "radius",
           to: 20,
           duration: 1000,
-          easing: am5.ease.out(am5.ease.cubic),
+          easing: am5.ease.out(am5.ease.quad),
+          loops: Infinity
+        });
+        circle0.animate({
+          key: "fill",
+          to: am5.color(0xccffcc),
+          duration: 1000,
+          easing: am5.ease.yoyo(am5.ease.cubic),
           loops: Infinity
         });
         circle1.animate({
@@ -130,7 +136,11 @@ function genChart(dados,target_div,moeda) {
 
     series.appear(1000);
     chart.appear(1000, 100);
-    dbg_chart = chart;
+
+    //DEBUGGER SUPER MEGA UTIL
+    if (moeda=="USD") {
+        dbg_chart = chart;
+    }
 }
 
 function generateDados(target_div,moeda) {
