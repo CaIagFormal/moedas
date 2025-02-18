@@ -44,4 +44,8 @@ public class S_Cotacao {
     public List<M_Chart> getChartByMoeda(String moeda) {
         return r_cotacao.getChartByMoeda(moeda);
     }
+
+    public M_Chart getLatestChartByMoeda(String moeda) {
+        return r_cotacao.getlatestChartByMoeda(moeda);
+    }
 }

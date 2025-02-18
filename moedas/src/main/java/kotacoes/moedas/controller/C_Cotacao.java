@@ -23,7 +23,13 @@ public class C_Cotacao {
 
     @PostMapping("/get_chart_data")
     @ResponseBody
-    public List<M_Chart> getCotacaoMoeda(@RequestParam("moeda") String moeda) {
+    public List<M_Chart> getChartByMoeda(@RequestParam("moeda") String moeda) {
         return s_cotacao.getChartByMoeda(moeda);
+    }
+
+    @PostMapping("/get_latest_chart")
+    @ResponseBody
+    public M_Chart getLatestChartByMoeda(@RequestParam("moeda") String moeda) {
+        return s_cotacao.getLatestChartByMoeda(moeda);
     }
 }
