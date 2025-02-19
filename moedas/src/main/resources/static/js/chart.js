@@ -164,6 +164,14 @@ function requestData(moeda,series,xAxis,easing) {
             moeda: moeda
         },
         success: function(dado) {
+            if (dado==null) {
+                return;
+            }
+
+            let lastDate = series.dataItems[series.dataItems.length - 1].get("valueX");
+            if ((lastDate-(lastDate%60000))==dado.data) {
+                return;
+            }
             addData(dado.value,dado.date,series,xAxis,easing);
         }
     })

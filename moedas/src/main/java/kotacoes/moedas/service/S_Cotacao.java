@@ -11,6 +11,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +49,14 @@ public class S_Cotacao {
     }
 
     public M_Chart getLatestChartByMoeda(String moeda) {
-        return r_cotacao.getlatestChartByMoeda(moeda);
+
+        M_Chart m_chart = r_cotacao.getlatestChartByMoeda(moeda);
+        long now = Instant.now(Clock.system(ZoneId.of("America/Sao_Paulo"))).toEpochMilli();
+
+        if ((now - (now%60000))>m_chart.getDate()) {
+            return null;
+        }
+
+        return m_chart;
     }
 }
